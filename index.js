@@ -4,6 +4,7 @@ const songURL =
 
 const login = "-";
 const password = "-";
+const userName = "Michał Kisiel";
 
 start();
 
@@ -37,7 +38,7 @@ async function downloadLyrics(page) {
   console.log(song);
   let splitSong = song.split(/\r?\n/);
   console.log(splitSong);
-  const regex = new RegExp(/\[\w*\]/g);
+  const regex = new RegExp(/\[[^\[]*\]/g);
   function filterArray(text){
     return !text.match(regex);
 }
@@ -58,8 +59,8 @@ async function sendMessages(page, result) {
   await page.getByTestId("royal_login_button").click();
   await page.getByRole("button", { name: "Messenger" }).click();
   await page.getByPlaceholder("Szukaj w Messengerze").click();
-  await page.getByPlaceholder("Szukaj w Messengerze").fill("mic");
-  await page.getByRole("link", { name: "Michał Kisiel", exact: true }).click();
+  await page.getByPlaceholder("Szukaj w Messengerze").fill(userName);
+  await page.getByRole("link", { name: userName, exact: true }).first().click();
 
   for (let i = 0; i <= result.length; i++) {
     await page.getByRole("textbox", { name: "Wiadomość" }).fill(result[i]);
